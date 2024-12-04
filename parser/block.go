@@ -965,7 +965,12 @@ func (p *Parser) fencedCodeBlock(data []byte, doRender bool) int {
 
 		// did we reach the end of the buffer without a closing marker?
 		if end >= len(data) {
-			return 0
+			if doRender {
+				// process the rest of the data as part of the code block
+				work.Write(data[beg:])
+			}
+			beg = len(data)
+			break
 		}
 
 		// verbatim copy to the working buffer

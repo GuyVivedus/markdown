@@ -75,3 +75,12 @@ func TestRect(t *testing.T) {
 			input, exp, got)
 	}
 }
+
+func TestInfiniteLoopFix(t *testing.T) {
+	input := "```\n: "
+	p := NewWithExtensions(CommonExtensions)
+	doc := p.Parse([]byte(input))
+	if doc == nil {
+		t.Errorf("Expected non-nil AST")
+	}
+}
